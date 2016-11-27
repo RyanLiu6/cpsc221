@@ -287,15 +287,13 @@ void findStatsHelper(Node * root, double &avg, double &var, int &count) {
     avg = 0; var = 0; count = 0;
     return;
   }
-
+  double lavg, lvar, ravg, rvar;
+  int lcount, rcount;
   // Fork each individual recurisve call
   // Only join back if count <= 1100
   if (calcHeight(root) <= SEQUENTIAL_CUTOFF) {
     findStatsSequential(root, avg, var, count);
   }
-
-  double lavg, lvar, ravg, rvar;
-  int lcount, rcount;
   else {
 	  #pragma omp task untied shared(lavg, lvar, lcount) 
 	  {
