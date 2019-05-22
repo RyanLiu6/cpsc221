@@ -1,0 +1,30 @@
+Remove:
+Asymptotic running time of remove = O(size*log(size))
+- Remove iterates through the heap to find if the element
+at index i is equal to the key specified.
+  - This is running time O(size)
+- It uses the heapify function to properly set the heap
+  - heapify calls swapDown, which is a recursive function
+    - Running time of swapDown is O(log(size)) 
+    - heapify calls swapDown (size - 2)/2 times -> in the 
+      scheme of running time we can just think of it as O(size)
+    - Thus running time = size*log(size) -> O(size*log(size))
+
+mergeHeap:
+Asymptotic running time of mergeHeap = O(A*log(A)) where 
+A = size1 + size2
+- in my implementation of mergeHeap, I used the copy function
+    - The Copy function itself just iterates through heap1 and
+      sets the value of newHeap to be the same as heap1. 
+    - Thus my first call of Copy takes O(size1) and my second
+      call to Copy takes O(size2).
+- However, heapify iterates from i = (size-2)/2 to 0, which in
+  this case size = size1+size2. Let A = size1 + size2
+  - heapify calls on swapDown, which is a recursive function   
+    - Running time of swapDown is O(log(size)) due to the nature
+      of recursive functions
+      - #recursive calls < log_2(size)
+      - For heapify, swapDown = O(log(A))
+  - heapify calls swapDown A times
+    - function runs for A times of swapDown
+    - Thus, running time = A*log(A) -> O(A*log(A))

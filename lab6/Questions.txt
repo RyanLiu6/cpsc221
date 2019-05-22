@@ -1,0 +1,19 @@
+- It is not in-place: Uses additional memory to store the stack
+  frames of the recursivle calls. Each recursive call reduces
+  the # of stack frames but it still uses additional memory.
+
+  if stack memory does not count towards extra memory usage,
+  then it is in-place.
+
+- It is not stable: The swap does not account for equal keys,
+  thus do not preserve order. Ex. 
+  4 6 6 6 3 w/ 4 as pivot. Check all, and see that 3 is < 4, so
+  swap(x[++M], x[i]) or 6 with 3, thus result is 4 3 6 6 6 and 
+  to finish up we swap 4 with 3, getting 3 4 6 6 6. The third 6
+  is now the first 6, and thus we have broken the order.
+
+Average Case: O(n log n)
+Worst Case: O(n^2)
+- Unlikely -> Would require the worst pivot point, either the
+  minimum or maximum values. This is highly unlikely as we are 
+  randomizing our pivot point. 

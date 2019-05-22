@@ -1,0 +1,72 @@
+3. 
+Define Performance = (Average Probes / Insert) as K
+Define Load factor = (Insert / Size) as L
+i)
+- Doing some testings, with L of ~ 0.3 to 0.4, Linear and Quadratic 
+  probing both result in the same or roughly the same K. 
+  Thus, if L <= 0.4, then Linear is just as good as Quadratic
+  probing. With L > 0.4, Quadratic probing begins to win out,
+  as K_lin > K_quad, which means that Linear does more probing.
+
+- In addition, we saw that although L definitely does affect
+  performance K, another important factor is the size. Keeping L
+  the same and varying size gives me the same result as above.
+  For example:
+  ./hash l 300 1000 -> K = 356/300
+  ./hash q 300 1000 -> K = 341/300
+
+  K for both functions are very similar, and conforms to the 
+  hypothesis as above. However, you do see that Quadratic is
+  better than Linear even with a L of 0.3. This goes to show that
+  although L is important, size may be more important in calculating
+  K. 
+
+ii)
+- In our case, our Double is almost always better than Quadratic. We've
+  tried using many different sizes and L, but in the end, K produced
+  from both shows that K_d < K_quad. 
+
+  This is not true in the case when the L is very small, and the difference
+  between K_d and K_quad is very small. There is a very small margin of error
+  which makes it so that sometimes K_d < K_quad and sometimes K_d > K_quad.
+
+- This is done using our hash_2 function of r - (k % r) where 
+  k is the value and r is size - 1.
+
+- Looking online, there are other hash_2 functions that include using
+  a static r, such as 50, or 100. This is good to control your results,
+  but not good in devising a dynamic hash_2 function that works for
+  all sizes and L. We could also use a really big r, such as 8096, and
+  this would work for quite a bit of hashings.
+
+- Other hash_2 functions include using a specific digit of the k given.
+  Example: 2248 -> 4. 6414 -> 1. This could be used as an alternative
+  hash function. 
+
+iii) 
+- From our testings, we saw that Double begins to win out as 
+  L approaches 1. This makes sense, as Double spreads out the 
+  inserts to prevent clustering. The other two, Linear and Quadratic
+  doesn't guarantee that there are no clusters. This means that 
+  for some inserts, there will be a lot of probing, and thus K 
+  increases. 
+
+iv) 
+- We would choose Double hashing. Double hashing prevents clustering
+  by spreading out the inserts. Finding a spot in a cluster is very
+  expensive, and thus it is best to use Double Hashing. This way,
+  you get good performance without the need to really worry about
+  cost too much. 
+
+- We would almost always choose Double over Linear and Quadratic.
+  Double allows you to spread out the inserts to prevent clustering.
+  The advantages are laid out above, but if size is not very large,
+  you don't have to an extra hash function. The extra hash function 
+  can be expensive, and you may need to worry about that when designing
+  your hashtable. Instead, you can use a much simple Quadratic probing 
+  instead. This is not very expensive and can still accomplish the same,
+  with slightly higher K. 
+
+  In addition, for really small sizes, it might even be better to use
+  Linear as there would be no need to use Quadratic. In the end,
+  everything depends on the size.
